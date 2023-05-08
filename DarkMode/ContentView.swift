@@ -8,14 +8,27 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var darkMode: Bool = false
+    @State private var currentMode: ColorScheme = .light
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        NavigationView {
+            Form {
+                
+                Toggle("Dark Mode", isOn: $darkMode)
+                    .onChange(of: darkMode) {value in
+                        if darkMode == true {
+                            currentMode = .dark
+                        } else {
+                            currentMode = .light
+                        }
+                    }
+                
+            }.navigationTitle("Settings ")
+                .preferredColorScheme(currentMode)
+                .toggleStyle(SwitchToggleStyle(tint: Color.red))
+            
         }
-        .padding()
     }
 }
 
